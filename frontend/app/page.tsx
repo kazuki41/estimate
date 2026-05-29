@@ -173,6 +173,15 @@ export default function Home() {
         { id: Date.now(), sender: "ai", text: aiText },
       ]);
     } catch (err: any) {
+
+      if (err?.response?.status === 429) {
+        if (typeof window !== "undefined") {
+          alert("⚠️ APIトークンの上限（1分間に3回）に達しました。しばらく時間を置いてから再度お試しください。");
+        }
+        setIsLoading(false);
+        return; // ここで処理を終了させてチャットにエラー文を出さないようにする
+      }
+      
       const serverError =
         err?.response?.data?.error ||
         err?.response?.data?.message ||

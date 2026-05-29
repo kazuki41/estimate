@@ -6,7 +6,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Api\EstimateController;
 
 // ログインしているユーザーだけが通れるエリア
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum' , 'throttle:3,1'])->group(function () {
 
     // 現在のユーザー情報を取得する（元からあったやつ）
     Route::get('/user', function (Request $request) {
@@ -27,6 +27,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 // ログインの壁（group）の外側に書きます
-Route::get('/test', function () {
-    return response()->json(['message' => 'Laravelと繋がったよ！']);
-});
+// 
+// Route::get('/test', function () {
+//     return response()->json(['message' => 'Laravelと繋がったよ！']);
+// });
